@@ -1,24 +1,105 @@
 import { sequelize } from '../db.js';
 import { DataTypes } from 'sequelize';
 
+// Модель Client
 const Client = sequelize.define(
-  'client',
+  'Client',
   {
-    // Model attributes are defined here
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    lastName: {
+    name: {
       type: DataTypes.STRING,
-      // allowNull defaults to true
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.DECIMAL,
+      defaultValue: 0,
+    },
+    bday: {
+      type: DataTypes.DATEONLY,
     },
   },
   {
-    // Other model options go here
-  },
+    timestamps: false,
+  }
 );
 
-// `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
+// Модель Order
+const Order = sequelize.define(
+  'Order',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    status: {
+      type: DataTypes.ENUM('open', 'closed', 'cancelled'),
+      defaultValue: 'open',
+    },
+    date: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    totalPrice: {
+      type: DataTypes.DECIMAL,
+      defaultValue: 0,
+    },
+  },
+  {
+    timestamps: false,
+  }
+);
+
+// Модель Cart
+const Cart = sequelize.define(
+  'Cart',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    },
+  },
+  {
+    timestamps: false,
+  }
+);
+
+// Модель Product
+const Product = sequelize.define(
+  'Product',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      defaultValue: 0,
+    },
+  },
+  {
+    timestamps: false,
+  }
+);
