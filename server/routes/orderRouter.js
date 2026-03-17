@@ -1,14 +1,9 @@
+import { createOrder, getAllOrder } from "../controllers/orderController.js"
 import { Order } from "../models/orderModels.js"
 import { Router} from "express"
 export const router =Router()
 
-app.get('/clients/',async (req, res) => {
-    try{
-        const getAllOrders = await Order.findAll()
-        res.status(200).json(getAllOrders)
-    }
-    catch(error){
-        console.error("Не удалось получить данные")
-    }
-})
+router.use('',getAllOrder)
+router.use('',createOrder)
+
 export default router

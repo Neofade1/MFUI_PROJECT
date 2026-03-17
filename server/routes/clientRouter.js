@@ -1,15 +1,9 @@
 import { Client } from "../models/clientModel.js"
 import { Router} from "express"
+import { getAllClients,createClient } from "../controllers/clientContoller.js"
 export const router =Router()
 
-app.get('/clients/',async (req, res) => {
-    try{
-        const getAllClients = await Client.findAll()
-        res.status(200).json(getAllClients)
-    }
-    catch(error){
-        console.error("Не удалось получить данные")
-    }
-})
+router.use('',getAllClients)
+router.use('',createClient)
 
 export default router
