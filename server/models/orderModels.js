@@ -1,29 +1,25 @@
 import { sequelize } from '../db.js';
 import { DataTypes } from 'sequelize';
 
-export const Client = sequelize.define(
-  'Client',
+export const Order = sequelize.define(
+  'Order',
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    status: {
+      type: DataTypes.ENUM('open', 'closed', 'cancelled'),
+      defaultValue: 'open',
     },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
+    date: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
-    rating: {
+    totalPrice: {
       type: DataTypes.DECIMAL,
       defaultValue: 0,
-    },
-    bday: {
-      type: DataTypes.DATEONLY,
     },
   },
   {
