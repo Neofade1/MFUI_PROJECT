@@ -18,12 +18,8 @@ export const createClient= async  (req, res) => {
         const newClient = await Client.create({name,email,rating,bday})
         res.status(201).json(newClient)
     }
-    catch(error){
-        console.error("Не удалось добавить клиента")
-        res.status(500).json({
-        success: false,
-        message: "не удалось добавить нового клиента "
-        })
-        
+    catch(err){
+        next(err)
     }
 }
+//HTTP-Debug
