@@ -14,8 +14,8 @@ export const getAllOrder= async  (req, res) => {
 //HTTP
 export const createOrder= async  (req, res) => {
     try{
-        const {name,email,rating,bday}=req.body
-        const newOrder = await Order.create({name,email,rating,bday})
+        const {status,date,totalPrice}=req.body
+        const newOrder = await Order.create({status,date,totalPrice})
         res.status(201).json(newOrder)
     }
     catch(error){

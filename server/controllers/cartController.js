@@ -14,8 +14,8 @@ export const getAllCart= async  (req, res) => {
 //HTTP
 export const createCart= async  (req, res) => {
     try{
-        const {name,email,rating,bday}=req.body
-        const newCart = await Cart.create({name,email,rating,bday})
+        const {id,quantity}=req.body
+        const newCart = await Cart.create({id,quantity})
         res.status(201).json(newCart)
     }
     catch(error){
