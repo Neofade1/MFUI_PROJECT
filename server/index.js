@@ -3,6 +3,7 @@ import 'dotenv/config' // import одного экземпляра - import {Seq
 import { sequelize } from './models/index.js'
 import cors from 'cors'
 import { router } from './routes/router.jsjs'
+import errorHandler from './middleware/errorHandler.js'
 
 // константы приложения(app) и порт
 const app = express() 
@@ -12,6 +13,7 @@ app.use(cors())
 app.use(express.json())
 app.use('',router)
 
+app.use(errorHandler)
 const startServer = async () => {
     try {
         app.listen(port, () => console.log(`Сервер работает http://localhost:${port}`))

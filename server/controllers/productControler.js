@@ -5,8 +5,8 @@ export const getAllProducts= async  (req, res) => {
         const getAllProducts = await Product.findAll()
         res.status(200).json(getAllProducts)
     }
-    catch(error){
-        console.error("Не удалось получить данные")
+    catch(err){
+        next(err)
     }
 }
 
@@ -18,7 +18,7 @@ export const createProducts= async  (req, res) => {
         const newProduct = await Product.create({name,description,status})
         res.status(201).json(newProduct)
     }
-    catch(error){
-        console.error("Не удалось добавить продукт")
+    catch(err){
+        next(err)
     }
 }

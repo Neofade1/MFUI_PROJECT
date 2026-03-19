@@ -5,8 +5,8 @@ export const getAllCart= async  (req, res) => {
         const getAllClients = await Cart.findAll()
         res.status(200).json(getAllCart)
     }
-    catch(error){
-        console.error("Не удалось получить данные")
+    catch(err){
+        next(err)
     }
 }
 
@@ -18,7 +18,7 @@ export const createCart= async  (req, res) => {
         const newCart = await Cart.create({id,quantity})
         res.status(201).json(newCart)
     }
-    catch(error){
-        console.error("Не удалось добавить карту")
+   catch(err){
+        next(err)
     }
 }

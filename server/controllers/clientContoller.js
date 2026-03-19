@@ -5,8 +5,8 @@ export const getAllClients= async  (req, res) => {
         const getAllClients = await Client.findAll()
         res.status(200).json(getAllClients)
     }
-    catch(error){
-        console.error("Не удалось получить данные")
+    catch(err){
+        next(err)
     }
 }
 
@@ -20,5 +20,10 @@ export const createClient= async  (req, res) => {
     }
     catch(error){
         console.error("Не удалось добавить клиента")
+        res.status(500).json({
+        success: false,
+        message: "не удалось добавить нового клиента "
+        })
+        
     }
 }

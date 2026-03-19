@@ -5,8 +5,8 @@ export const getAllOrder= async  (req, res) => {
         const getAllOrder = await Order.findAll()
         res.status(200).json(getAllOrder)
     }
-    catch(error){
-        console.error("Не удалось получить данные")
+    catch(err){
+        next(err)
     }
 }
 
@@ -18,7 +18,7 @@ export const createOrder= async  (req, res) => {
         const newOrder = await Order.create({status,date,totalPrice})
         res.status(201).json(newOrder)
     }
-    catch(error){
-        console.error("Не удалось добавить меню")
+    catch(err){
+        next(err)
     }
 }
