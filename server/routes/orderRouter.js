@@ -1,9 +1,12 @@
-import { createOrder, getAllOrder } from "../controllers/orderController.js"
+import { createOrder, getAllOrder,updateOrder,updateOrderStatus,getOneOrder } from "../controllers/orderController.js"
 import { Order } from "../models/orderModels.js"
 import { Router} from "express"
 export const router =Router()
 
-router.use('',getAllOrder)
-router.use('',createOrder)
+router.get('',getAllOrder)
+router.get('/:id', getOneOrder)
+router.post('',createOrder)
+router.get('',updateOrder)
+router.get('',updateOrderStatus)
 
 export default router
