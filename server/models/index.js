@@ -1,8 +1,8 @@
-import { sequelize } from "../db";
-import { Cart } from "./CartModels";
-import { Client } from "./clientModel";
-import { Order } from "./orderModels";
-import { Product } from "./ProductsModels";
+import { sequelize } from "../db.js";
+import { Cart } from "./CartModels.js";
+import { Client } from "./clientModel.js";
+import { Order } from "./orderModels.js";
+import { Product } from "./ProductsModels.js";
 
 Client.hasMany(Order)
 Order.belongsTo(Client)
