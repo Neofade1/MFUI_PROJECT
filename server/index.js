@@ -10,6 +10,17 @@ const port = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
+
+
+// ДОБАВЬТЕ ЭТОТ МАРШРУТ ДЛЯ ПРОВЕРКИ
+app.get('/', (req, res) => {
+    res.json({ 
+        message: 'Сервер работает!',
+        status: 'ok',
+        timestamp: new Date().toISOString()
+    });
+});
+
 app.use('', router);
 app.use(errorHandler);
 

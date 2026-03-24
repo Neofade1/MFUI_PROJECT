@@ -15,56 +15,102 @@ export const getAllCart= async  (req, res) => {
 export const createCart= async  (req, res) => {
     try{
         const {quantity}=req.body
-        const newCart = await Cart.create({quantity})
+        const newCart = await Cart.create({quantity,ProductId,OrderId})
         res.status(201).json(newCart)
     }
    catch(err){
-        next(err)
     }
 }
-//HTTP-Getone
-export const getOneCart= async  (req, res,next) => {
+// HTTP - GET ONE (ИСПРАВЛЕНО)
+export const getOneCart = async (req, res, next) => {
     try{
-        const {id}=req.params
+        const { id } = req.params
         const onecart = await Cart.findOne({
-            where: {id}
+            where: { id }
         })
-        if (!onecart) return
-        res.status(404).json({
-            message:'карта с таким ID не найден'
-        })
+        
+        if (!onecart) {
+            return res.status(404).json({
+                message: 'Корзина с таким ID не найдена'
+            })
+        }
+        
         res.status(200).json(onecart)
     }
     catch(err){
         next(err)
     }
 }
-//HTTP-PUT метод
+// HTTP - PUT метод (ИСПРАВЛЕНО)
 export const updateCart = async (req, res, next) => {
   try {
     const { id } = req.params
     const [updated] = await Cart.update(req.body, { where: { id } })
-    if (!updated) return res.status(404).json({message: 'карта не найден'})
-      const Cart = await Cart.findByPk(id)
-      res.json(Cart)
+    
+    if (!updated) {
+        return res.status(404).json({ message: 'Корзина не найдена' })
+    }
+    
+    const cart = await Cart.findByPk(id)
+    res.json(cart)
   }
   catch (err) {
     next(err)
   }
 }
-//HTTP-PATCH метод
+// HTTP - PATCH метод (ИСПРАВЛЕНО)
 export const updateCartStatus = async (req, res, next) => {
   try {
     const { id } = req.params
-    const { rating } = req.body
+    const { quantity } = req.body
  
-    const newRating = await Cart.findByPk(id)
-    if (!newRating) return res.status(404).json({ message: "карта не найден"})
-      newRating.rating = rating
-    await newRating.save()
-    res.json(newRating)
+    const cart = await Cart.findByPk(id)
+    if (!cart) {
+        return res.status(404).json({ message: "Корзина не найдена" })
+    }
+    
+    cart.quantity = quantity
+    await cart.save()
+    res.json(cart)
   }
-   catch (err) {
+  catch (err) {
+    next(err)
+  }
+}
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const deleted = await Product.destroy({
+      where: { id }
+    })
+
+    if (!deleted) {
+      res.status(404).json({ message: "Товар не найден" })
+    } else {
+      res.status(200).json({ message: "Товар удален" })
+    }
+  }
+  catch (err) {
+    next(err)
+  }
+}
+
+export const deleteCart = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const deleted = await Cart.destroy({
+      where: { id }
+    })
+
+    if (!deleted) {
+      res.status(404).json({ message: "Корзина не найдена" })
+    } else {
+      res.status(200).json({ message: "Корзина удалена" })
+    }
+  }
+  catch (err) {
     next(err)
   }
 }

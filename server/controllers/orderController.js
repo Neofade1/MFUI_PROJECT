@@ -1,6 +1,6 @@
 import { Order } from "../models/orderModels.js"
 
-export const getAllOrder= async  (req, res) => {
+export const getAllOrder = async (req, res, next) => {
     try{
         const getAllOrder = await Order.findAll()
         res.status(200).json(getAllOrder)
@@ -10,61 +10,93 @@ export const getAllOrder= async  (req, res) => {
     }
 }
 
-
-//HTTP
-export const createOrder= async  (req, res) => {
+// HTTP - CREATE
+export const createOrder = async (req, res, next) => {
     try{
-        const {status,date,totalPrice}=req.body
-        const newOrder = await Order.create({status,date,totalPrice})
+        const { status, date, totalPrice } = req.body
+        const newOrder = await Order.create({ status, date, totalPrice })
         res.status(201).json(newOrder)
     }
     catch(err){
         next(err)
     }
 }
-//HTTP-Getone
-export const getOneOrder= async  (req, res,next) => {
+
+// HTTP - GET ONE (ИСПРАВЛЕНО)
+export const getOneOrder = async (req, res, next) => {
     try{
-        const {id}=req.params
+        const { id } = req.params
         const oneorder = await Order.findOne({
-            where: {id}
+            where: { id }
         })
-        if (!oneorder) return
-        res.status(404).json({
-            message:'меню с таким ID не найден'
-        })
+        
+        if (!oneorder) {
+            return res.status(404).json({
+                message: 'Заказ с таким ID не найден'
+            })
+        }
+        
         res.status(200).json(oneorder)
     }
     catch(err){
         next(err)
     }
 }
-//HTTP-PUT метод
+
+// HTTP - PUT метод
 export const updateOrder = async (req, res, next) => {
   try {
     const { id } = req.params
     const [updated] = await Order.update(req.body, { where: { id } })
-    if (!updated) return res.status(404).json({message: 'меню не найдено'})
-      const order = await Order.findByPk(id)
-      res.json(order)
+    
+    if (!updated) {
+        return res.status(404).json({ message: 'Заказ не найден' })
+    }
+    
+    const order = await Order.findByPk(id)
+    res.json(order)
   }
   catch (err) {
     next(err)
   }
 }
-//HTTP-PATCH метод
+
+// HTTP - PATCH метод (ИСПРАВЛЕНО)
 export const updateOrderStatus = async (req, res, next) => {
   try {
     const { id } = req.params
-    const { rating } = req.body
+    const { status } = req.body
  
-    const newRating = await Order.findByPk(id)
-    if (!newRating) return res.status(404).json({ message: "меню не найдено"})
-      newRating.rating = rating
-    await newRating.save()
-    res.json(newRating)
+    const order = await Order.findByPk(id)
+    if (!order) {
+        return res.status(404).json({ message: "Заказ не найден" })
+    }
+    
+    order.status = status
+    await order.save()
+    res.json(order)
   }
-   catch (err) {
+  catch (err) {
+    next(err)
+  }
+}
+
+// HTTP - DELETE
+export const deleteOrder = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const deleted = await Order.destroy({
+      where: { id }
+    })
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Заказ не найден" })
+    }
+    
+    res.status(200).json({ message: "Заказ удален" })
+  }
+  catch (err) {
     next(err)
   }
 }

@@ -20,6 +20,9 @@ export const Product = sequelize.define(
       type: DataTypes.DECIMAL,
       defaultValue: 0,
     },
+    imageUrl:{
+      type: DataTypes.STRING
+    }
   },
   {
     timestamps: false,
