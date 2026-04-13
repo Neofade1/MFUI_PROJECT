@@ -21,7 +21,7 @@ export const Product = sequelize.define(
       defaultValue: 0,
     },
     imageUrl:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     }
   },
   {

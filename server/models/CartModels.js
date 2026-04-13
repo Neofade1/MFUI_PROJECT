@@ -13,6 +13,9 @@ export const Cart = sequelize.define(
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
+    imageUrl:{
+      type: DataTypes.STRING,
+    }
   },
   {
     timestamps: false,

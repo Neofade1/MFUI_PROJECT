@@ -25,6 +25,9 @@ export const Client = sequelize.define(
     bday: {
       type: DataTypes.DATEONLY,
     },
+    imageUrl:{
+      type: DataTypes.STRING,
+    }
   },
   {
     timestamps: false,
